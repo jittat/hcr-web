@@ -33,6 +33,17 @@ def status(job_id):
     else:
         return 'true'
 
+    
+@app.route('/result/<job_id>')
+def result(job_id):
+    job = Job.get(job_id)
+    if not job or not job['is_done']:
+        return 'Not found', 404
+    temp_dir = job['temp_dir']
+    data = open(temp_dir + '/result.txt').read()
+    return data
+
+
 if __name__ == '__main__':
     app.debug = True
     app.run()

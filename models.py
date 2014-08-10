@@ -29,6 +29,10 @@ class Job:
         return j
 
     @staticmethod
+    def get_queue():
+        return Job.jobs.find_one({'is_done': False})
+
+    @staticmethod
     def is_done(_id):
         j = Job.get(_id)
         return j and j['is_done']

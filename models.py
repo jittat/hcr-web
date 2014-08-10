@@ -24,7 +24,7 @@ class Job:
 
     @staticmethod
     def get(_id):
-        job_id = ObjectId(id)
+        job_id = ObjectId(_id)
         j = Job.jobs.find_one({'_id': job_id})
         return j
 

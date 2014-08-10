@@ -1,10 +1,51 @@
 {% extends "layout.html" %}
 {% block body %}
 <h1>HCR Exp</h1>
-Queue size: {{ queue_size }}<br>
-<form id="options" style="background: #f0f0f0; border: 1px solid #a0a0a0; padding: 5px">
-  <input type="submit">
+Queue size: <span id="qsize">{{ queue_size }}</span><br>
+<form id="options" style="background: #f0f0f0; border: 1px solid #a0a0a0; padding: 5px" action="{{ url_for('submit') }}" method="post">
+  <input type="checkbox" name="net-mrt" checked>MRT 
+  <input type="checkbox" name="net-mrt" checked>BTS
+  <input type="checkbox" name="net-bangkoknoi">บางกอกน้อย
+  <input type="checkbox" name="net-bangsue">บางซื่อ
+  <input type="checkbox" name="net-ladprao">ลาดพร้าว
+  <input type="checkbox" name="net-saensap">แสนแสบ
+  <input id="submit_id" type="submit" value="Simulate">
 </form>
+<div id="wait" style="display: none">
+  Generating chart... please wait <img src="{{ url_for('static', filename='img/preload.gif') }}">
+</div>
 <div id="result">
 </div>
+<script>
+ var JOB_POLL_TIMEOUT = 1000;
+ var currentJobId = null;
+ 
+ var loadJobResult = function() {
+   if(!currentJobId) {
+     return false;
+   }
+   var url = '{{ url_for('status', job_id='') }}' + currentJobId;
+   jQuery.get(url, function(data) {
+     if(data !== 'false') {
+     } else {
+       setTimeout(loadJobResult, JOB_POLL_TIMEOUT);
+     }
+   });
+ };
+ 
+ $("#submit_id").click(function(){
+   url = $("#options").attr('action');
+   data = $("#options").serialize();
+   jQuery.post(url,
+               data,
+               function(data) {
+       currentJobId = data.jobid;
+       $("#qsize").text(data.qsize);
+       $("#result").html('');
+       $("#wait").show();
+       setTimeout(loadJobResult, JOB_POLL_TIMEOUT);
+     });
+   return false;
+ });
+</script>
 {% endblock %}

@@ -30,7 +30,8 @@ def create_network_file(net_filename, options):
 
     net_files = ['bts', 'mrt',
                  'chaophraya',
-                 'bangkoknoi', 'bangsue', 'ladprao', 'saensap', 'phasicharoen']
+                 'bangkoknoi', 'bangsue', 'omnon',
+                 'ladprao', 'saensap', 'phasicharoen']
     rail_files = set(['bts','mrt'])
     for n in net_files:
         net_key = 'net-%s' % n

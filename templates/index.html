@@ -18,13 +18,18 @@
   <input type="checkbox" name="net-ladprao">ลาดพร้าว
   <input type="checkbox" name="net-saensap">แสนแสบ
   <input id="submit_id" type="submit" value="Simulate">
-  <br>
   <small>
-    <b>Options:</b>
-    Speed ratio:
-    rail/road <input type="text" name="rate-rail-road" value="3.0" size="2">
-    canal/road <input type="text" name="rate-canal-road" value="2.0" size="2">
+    [<a id="additional_options_toggle" href="#">options</a>]
   </small>
+  <br>
+  <div id="additional_options" style="display:none">
+    <small>
+      <b>Options:</b>
+      Speed ratio:
+      rail/road <input type="text" name="rate-rail-road" value="3.0" size="2">
+      canal/road <input type="text" name="rate-canal-road" value="3.0" size="2">
+    </small>
+  </div>
 </form>
 <div id="result">
 </div>
@@ -54,20 +59,26 @@
      }
    });
  };
- 
- $("#submit_id").click(function(){
-   url = $("#options").attr('action');
-   data = $("#options").serialize();
-   jQuery.post(url,
-               data,
-               function(data) {
-       currentJobId = data.jobid;
-       $("#qsize").text(data.qsize);
-       //$("#result").html('');
-       $("#wait").show();
-       setTimeout(checkJobStatus, JOB_POLL_TIMEOUT);
-     });
-   return false;
+
+ $(function() {
+   $("#submit_id").click(function(){
+     url = $("#options").attr('action');
+     data = $("#options").serialize();
+     jQuery.post(url,
+                 data,
+                 function(data) {
+         currentJobId = data.jobid;
+         $("#qsize").text(data.qsize);
+         //$("#result").html('');
+         $("#wait").show();
+         setTimeout(checkJobStatus, JOB_POLL_TIMEOUT);
+       });
+     return false;
+   });
+   $("#additional_options_toggle").click(function(){
+     $("#additional_options").toggle();
+     return false;
+   });
  });
 </script>
 {% endblock %}

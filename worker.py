@@ -12,15 +12,41 @@ SCRIPT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__),
 JOB_DIR =  os.path.join(os.path.abspath(os.path.dirname(__file__)),
                         'jobs')
 
+def extract_rate(rstr):
+    return float(rstr[0].strip())
+
 def create_network_file(net_filename, options):
     f = open(net_filename,'w')
+
+    if 'rate-rail-road' in options:
+        rr_rate = extract_rate(options['rate-rail-road'])
+    else:
+        rr_rate = None
+
+    if 'rate-canal-road' in options:
+        cr_rate = extract_rate(options['rate-canal-road'])
+    else:
+        cr_rate = None
+
     net_files = ['bts', 'mrt',
                  'chaophraya',
                  'bangkoknoi', 'bangsue', 'ladprao', 'saensap', 'phasicharoen']
+    rail_files = set(['bts','mrt'])
     for n in net_files:
         net_key = 'net-%s' % n
+
         if net_key in options:
-            print >> f, 'network ../../../data/%s.csv' % n
+            cmd = ['network','../../../data/%s.csv' % n]
+        
+            if n not in rail_files:
+                cmd.append('color:blue')
+                if cr_rate:
+                    cmd.append('adv_factor:%f' % cr_rate)
+            else:
+                if rr_rate:
+                    cmd.append('adv_factor:%f' % rr_rate)
+
+            print >> f, ' '.join(cmd)
     f.close()
 
 def work(job):

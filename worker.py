@@ -15,7 +15,8 @@ JOB_DIR =  os.path.join(os.path.abspath(os.path.dirname(__file__)),
 def create_network_file(net_filename, options):
     f = open(net_filename,'w')
     net_files = ['bts', 'mrt',
-                 'bangkoknoi', 'bangsue', 'ladprao', 'saensap']
+                 'chaophraya',
+                 'bangkoknoi', 'bangsue', 'ladprao', 'saensap', 'phasicharoen']
     for n in net_files:
         net_key = 'net-%s' % n
         if net_key in options:
@@ -26,7 +27,7 @@ def work(job):
     job_dir = tempfile.mkdtemp(dir=JOB_DIR)
 
     net_filename = os.path.join(job_dir, 'network.cfg')
-    trip_filename = os.path.join(job_dir, '../../../test/trip-u5000.txt')
+    trip_filename = os.path.join(job_dir, '../../../test/trip-u3000.txt')
     result_filename = os.path.join(job_dir, 'result.txt')
 
     create_network_file(net_filename, job['options'])

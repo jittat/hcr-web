@@ -1,0 +1,10 @@
+h1 {
+    font-size: 150%;
+}
+
+.option_forms {
+    background: #f0f0f0;
+    border: 1px solid #a0a0a0;
+    padding: 5px;
+    margin-bottom: 5px;
+}

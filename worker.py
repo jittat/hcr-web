@@ -5,7 +5,7 @@ import os.path
 
 from models import Job
 
-POLL_TIME = 1.0
+POLL_TIME = 0.1
 
 SCRIPT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__),
                                           '../scripts'))
@@ -26,7 +26,7 @@ def work(job):
     job_dir = tempfile.mkdtemp(dir=JOB_DIR)
 
     net_filename = os.path.join(job_dir, 'network.cfg')
-    trip_filename = os.path.join(job_dir, '../../../test/trip-u1000.txt')
+    trip_filename = os.path.join(job_dir, '../../../test/trip-u5000.txt')
     result_filename = os.path.join(job_dir, 'result.txt')
 
     create_network_file(net_filename, job['options'])
@@ -49,6 +49,7 @@ def main():
             work(job)
             job['is_done'] = True
             Job.save(job)
+            print 'Done'
         else:
             time.sleep(POLL_TIME)
 

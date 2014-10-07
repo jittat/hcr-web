@@ -49,7 +49,10 @@ def create_network_file(net_filename, options):
 
             print >> f, ' '.join(cmd)
     if 'max-walk-distance' in options:
-        max_walk_distance = float(options['max-walk-distance'][0].strip())
+        try:
+            max_walk_distance = float(options['max-walk-distance'][0].strip())
+        except:
+            max_walk_distance = 0
         if max_walk_distance > 0:
             print >> f, 'max-walk-distance', max_walk_distance
     f.close()

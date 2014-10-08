@@ -29,8 +29,15 @@
       Speed ratio:
       rail/road <input type="text" name="rate-rail-road" value="3.0" size="2">
       canal/road <input type="text" name="rate-canal-road" value="3.0" size="2">
-      max-walking distance (km) <input type="text" name="max-walk-distance" value="-1" size="2">
-      (put -1 for infinity)
+      |
+      Walk: max-walking distance (km) <input type="text" name="max-walk-distance" value="-1" size="2">
+      <small>(-1 for infinity)</small>
+      |
+      Display:
+      <select name="display">
+        <option value="accept">Accept</option>
+        <option value="reject" selected>Reject</option>
+      </select>
     </small>
   </div>
 </form>

@@ -55,6 +55,8 @@ def create_network_file(net_filename, options):
             max_walk_distance = 0
         if max_walk_distance > 0:
             print >> f, 'max-walk-distance', max_walk_distance
+    if 'display' in options:
+        print >> f, 'display', options['display'][0].strip()
     f.close()
 
 def work(job):
